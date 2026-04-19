@@ -103,9 +103,10 @@ def int_check(question):
 # Initialise game variables
 mode = "regular"
 rounds_played = 0
+num_rounds = 0
 end_game = "no"
 feedback = ""
-symbols_list = ['✖️', '➕', '➖', '➗']
+symbols_list = ['x', '+', '-', '/']
 game_history = [ ]
 score = 0
 exit_code = 'xxx'
@@ -118,7 +119,6 @@ print()
 # Give user the option to see instructions
 # Checks user enters yes (y) or no (n)
 want_instructions = string_checker("Do you want to read the instructions?")
-
 if want_instructions == "yes":
     instructions()
 
@@ -140,11 +140,13 @@ if default_params == "yes":
         num2 = 12
 else:
     num1 = int_check(question="Num 1?: ")
-    num2 = int_check(question="Num 2? ")
+    num2 = int_check(question="Num 2?: ")
 
 
 # Game loop starts here
-while mode =="infinite" or num_rounds > rounds_played:
+
+while rounds_played < num_rounds:
+
     # Rounds headings (based on mode)
     if mode == "infinite":
         rounds_heading = f"\n♾️️♾️ Question {rounds_played + 1} (Infinite Mode) ♾️♾️"
@@ -157,13 +159,13 @@ while mode =="infinite" or num_rounds > rounds_played:
 
 # create the question for the user...
     answer = random.randint(num1, num2)
-    print("Spoiler Alert", answer)
+    print("Spoiler Alert: ", answer)
 
     guess = ""
     while guess != answer:
 
         # ask the user to guess the number
-        guess = int_check(question="Guess :", exit_code="xxx")
+        guess = int_check(question="Guess :")
 
         # check that they don't want to quit
         if guess == "xxx":
