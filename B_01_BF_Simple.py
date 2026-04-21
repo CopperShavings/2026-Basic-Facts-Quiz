@@ -131,6 +131,11 @@ if num_rounds == "":
     mode = "infinite"
     num_rounds = 5
 
+else:
+    print(f"{num_rounds} round/s chosen")
+
+
+# ask user if they want to customise the number range
 # Let the user select default parameters (1, 12) or let them choose their own
 
 print()
@@ -139,9 +144,9 @@ if default_params == "yes":
         num1 = 1
         num2 = 12
 else:
+    print()
     num1 = int_check(question="Num 1?: ")
     num2 = int_check(question="Num 2?: ")
-
 
 # Game loop starts here
 
@@ -156,48 +161,33 @@ while rounds_played < num_rounds:
     print(rounds_heading)
     print()
 
-
 # create the question for the user...
-    answer = random.randint(num1, num2)
-    print("Spoiler Alert: ", answer)
+    x = random.randint(num1, num2)
+    y = random.randint(num1, num2)
 
-    guess = ""
-    while guess != answer:
+    answer_add = x+y
 
-        # ask the user to guess the number
-        guess = int_check(question="Guess :")
-
-        # check that they don't want to quit
-        if guess == "xxx":
-            # set end_game to use so that outer loop can be
-            end_game = "yes"
-            break
+    print(f"{x}+{y} = ")
 
 
-# Random operator
-op = random.choice([symbols_list])
 
-# Calculate correct answer
-if op == '+':
-    answer = num1 + num2
-elif op == '-':
-    # Ensure no negative answers for beginners
-    num1, num2 = max(num1, num2), min(num1, num2)
-    answer = num1 - num2
-else:  # Multiplication
-    answer = num1 * num2
 
-# 3. Present question and take input
-user_answer = int(input(f"What is {num1} {op} {num2}? "))
 
-# 4. Check answer
-if user_answer == answer:
-    print("Correct!")
-    score += 1
-else:
-    print(f"Incorrect. The answer was {answer}")
+    # print("Spoiler Alert: ", answer)
+    #
+    # guess = ""
+    # while guess != answer:
+    #
+    #     # ask the user to guess the number
+    #     guess = int_check(question="Guess :")
+    #
+    #     # check that they don't want to quit
+    #     if guess == "xxx":
+    #         # set end_game to use so that outer loop can be
+    #         end_game = "yes"
+    #         break
+    #
 
-print(f"\nQuiz finished. Score: {score}/{num_rounds}")
 
 # Stats here
 
