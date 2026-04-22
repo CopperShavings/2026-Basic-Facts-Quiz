@@ -1,7 +1,7 @@
 import random
 import string
 from random import randint
-#➕✖️➖➗
+#➕✖️➖➗📄♾️✅
 
 # string checker (y/n)
 def string_checker(question, valid_ans=("yes", "no")):
@@ -36,33 +36,34 @@ def instructions():
     print("""
  *** Instructions ****
 
-- To begin, choose the number of questions you would
+📄 -  To begin, choose the number of questions you would
  like to answer (or press <enter> for infinite mode).
+--------
 
-
-- Then you need to pick whether you would like to use default 
+📄 -  Then you need to pick whether you would like to use default 
 parameters (1, 12) or pick your own!
 
-If you decide to choose your own, select a low number and 
-a high number (high must be more than low.)
+If you decide to choose your own, the numbers you pick must be
+between 1 and 100.
+--------
 
+📄 - You need to try get as many answers correct as possible!
+You have one guess per question, so be careful with your answer!
 
-- You need to try guess get as many answers correct as possible!
 You'll be answering addition, subtraction, multiplication, and 
 division questions
+--------
 
-- Select <xxx> to end the game.
+📄 - Select <xxx> to end the game.
 
 Good luck!
 
-
     """)
-
 
 # int check
 def int_check(question):
     while True:
-        response = input(question).lower()
+        response = question.lower()
         error = "Please enter an integer between 1 and 100."
 
         # check for inf mode / exit code
@@ -126,10 +127,11 @@ if want_instructions == "yes":
 # like to answer, or give them the option to select (inf mode)
 
 print()
-num_rounds = int_check("How many rounds would you like? Push <enter> for infinite mode: ")
-if num_rounds == "":
+num_rounds = int_check("How many questions would you like? Push <enter> for infinite mode: ")
+if num_rounds == "infinite":
     mode = "infinite"
     num_rounds = 5
+    print("Infinite mode chosen")
 
 else:
     print(f"{num_rounds} round/s chosen")
@@ -166,8 +168,11 @@ while rounds_played < num_rounds:
     y = random.randint(num1, num2)
 
     answer_add = x+y
+    answer_sub = x-y
+    answer_div = x/y
+    answer_mul = x*y
 
-    print(f"{x}+{y} = ")
+    print(f"{x}{symbols_list}{y} = ")
 
 
 
