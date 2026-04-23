@@ -1,4 +1,5 @@
 import random
+import operator
 import string
 from random import randint
 #➕✖️➖➗📄♾️✅
@@ -27,7 +28,6 @@ def string_checker(question, valid_ans=("yes", "no")):
         # print error if user does not enter something that is valid
         print(error)
         print()
-
 
 # game instructions - how to play
 def instructions():
@@ -62,34 +62,26 @@ Good luck!
 
 # int check
 def int_check(question):
+    error = "Please enter an integer between 1 and 100."
+    high = 100
+    low = 1
+
     while True:
-        response = question.lower()
-        error = "Please enter an integer between 1 and 100."
-
-        # check for inf mode / exit code
-        if response == exit_code:
-            return response
-
-        high = 100
-        low = 1
-
         to_check = input(question)
 
         # check for infinite mode
         if to_check == "":
             return "infinite"
 
+        # check for inf mode / exit code
+        if to_check == exit_code:
+            return exit_code
+
         try:
-            response = int(response)
+            response = int(to_check)
 
-            # Check the integer is not too low
-            if low is not None and response < low:
+            if response < low or response > high:
                 print(error)
-
-            # check response is more than the low number
-            elif high is not None and response > high:
-                print(error)
-
             # if the response is valid, return it
             else:
                 return response
@@ -167,18 +159,29 @@ while rounds_played < num_rounds:
     x = random.randint(num1, num2)
     y = random.randint(num1, num2)
 
-    answer_add = x+y
-    answer_sub = x-y
-    answer_div = x/y
-    answer_mul = x*y
+    if symbols_list == '+':
+        answer = x+y
+    elif symbols_list == '-':
+        answer = x-y
+    elif symbols_list == 'x':
+        answer = x*y
+    elif symbols_list == '/':
+        answer = x/y
 
-    print(f"{x}{symbols_list}{y} = ")
+
+
+    print()
+    user_guess = int_check(f"{x}{symbols_list}{y} = ")
+    if user_guess == answer:
+        print ("correct answer!")
+    else:
+        print(f"incorrect...")
 
 
 
 
 
-    # print("Spoiler Alert: ", answer)
+    # print("Spoiler Alert: ", correct_answer)
     #
     # guess = ""
     # while guess != answer:
