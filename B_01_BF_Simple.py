@@ -100,6 +100,10 @@ num_rounds = 0
 end_game = "no"
 feedback = ""
 symbols_list = ['x', '+', '-', '/']
+
+feedbackgood_list = ["Correct - Good job!", "Correct - Nice work!", "Correct - Cool!", "Correct - Great answer!"]
+feedbackbad_list = ["Incorrect - You'll get em next time!", "Incorrect - Uh oh!", "Incorrect - Nice try", "Incorrect - There's always next time!"]
+
 game_history = [ ]
 score = 0
 exit_code = 'xxx'
@@ -155,30 +159,47 @@ while rounds_played < num_rounds:
     print(rounds_heading)
     print()
 
+    # If use choice is the exit code, break loop
+    if mode == "xxx":
+        break
+
+    rounds_played += 1
+
+
+    # if users are in infinite mode, increase number of rounds
+    if mode == "infinite":
+        num_rounds += 1
+
+
+
 # create the question for the user...
+    symbol = random.choice(symbols_list)
+    feedback_bad = random.choice(feedbackbad_list)
+    feedback_good = random.choice(feedbackgood_list)
     x = random.randint(num1, num2)
     y = random.randint(num1, num2)
 
-    if symbols_list == '+':
-        answer = x+y
-    elif symbols_list == '-':
-        answer = x-y
-    elif symbols_list == 'x':
-        answer = x*y
-    elif symbols_list == '/':
-        answer = x/y
+    if symbol == '+':
+        answer = x + y
+    elif symbol == '-':
+        answer = x - y
+    elif symbol == 'x':
+        answer = x * y
+    elif symbol == '/':
+        x = x * y  # makes it divisible
+        answer = x / y
+
+    if num1 < num2 and symbol == '-':
 
 
-
-    print()
-    user_guess = int_check(f"{x}{symbols_list}{y} = ")
+    print("Spoiler Alert: ", answer)
+    user_guess = int_check(f"{x} {symbol} {y} = ")
     if user_guess == answer:
-        print ("correct answer!")
+        print (feedback_good)
+        continue
     else:
-        print(f"incorrect...")
-
-
-
+        print (feedback_bad)
+        continue
 
 
     # print("Spoiler Alert: ", correct_answer)
