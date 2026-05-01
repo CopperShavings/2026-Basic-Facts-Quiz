@@ -90,6 +90,35 @@ def int_check(question):
         except ValueError:
             print(error)
 
+def int_check2(question):
+    error = "Please enter an integer between 1 and 100."
+    high = 10000
+    low = -11111
+
+    while True:
+        to_check = input(question)
+
+        # check for infinite mode
+        if to_check == "":
+            return "infinite"
+
+        # check for inf mode / exit code
+        if to_check == exit_code:
+            return exit_code
+
+        try:
+            response = int(to_check)
+
+            if response < low or response > high:
+                print(error)
+            # if the response is valid, return it
+            else:
+                return response
+
+
+        except ValueError:
+            print(error)
+
 
 # Main routine starts
 
@@ -100,8 +129,10 @@ num_rounds = 0
 end_game = "no"
 feedback = ""
 symbols_list = ['x', '+', '-', '/']
+incorrect = 0
+correct = 0
 
-feedbackgood_list = ["Correct - Good job!", "Correct - Nice work!", "Correct - Cool!", "Correct - Great answer!"]
+feedbackgood_list = ["Correct - Good job!", "Correct - Nice work!", "Correct - Cool!", "Correct - Great answer!", "Correct! - Awesomeness!", "Correct! - Wow!"]
 feedbackbad_list = ["Incorrect - You'll get em next time!", "Incorrect - Uh oh!", "Incorrect - Nice try", "Incorrect - There's always next time!"]
 
 game_history = [ ]
@@ -159,8 +190,8 @@ while rounds_played < num_rounds:
     print(rounds_heading)
     print()
 
-    # If use choice is the exit code, break loop
-    if mode == "xxx":
+    # when user choice is the exit code, break loop
+    if mode == exit_code:
         break
 
     rounds_played += 1
@@ -169,7 +200,6 @@ while rounds_played < num_rounds:
     # if users are in infinite mode, increase number of rounds
     if mode == "infinite":
         num_rounds += 1
-
 
 
 # create the question for the user...
@@ -187,41 +217,52 @@ while rounds_played < num_rounds:
         answer = x * y
     elif symbol == '/':
         x = x * y  # makes it divisible
-        answer = x / y
+        answer = x // y
 
     if num1 < num2 and symbol == '-':
-
+            x, y = y, x
 
     print("Spoiler Alert: ", answer)
-    user_guess = int_check(f"{x} {symbol} {y} = ")
+    user_guess = int_check2(f"{x} {symbol} {y} = ")
+
     if user_guess == answer:
         print (feedback_good)
+        correct += 1
         continue
+
+    if user_guess == exit_code:
+        print("Ruh Roh...you chickened out")
+        break
+
     else:
         print (feedback_bad)
+        incorrect += 1
         continue
 
 
-    # print("Spoiler Alert: ", correct_answer)
-    #
-    # guess = ""
-    # while guess != answer:
-    #
-    #     # ask the user to guess the number
-    #     guess = int_check(question="Guess :")
-    #
-    #     # check that they don't want to quit
-    #     if guess == "xxx":
-    #         # set end_game to use so that outer loop can be
-    #         end_game = "yes"
-    #         break
-    #
 
+# #calc stats
+if exit_code or rounds_played > 0:
 
-# Stats here
+    rounds_won = rounds_played - incorrect
+    rounds_lost = rounds_played - correct
+    percent_won = rounds_won / rounds_played * 100
+    percent_lost = rounds_lost / rounds_played * 100
+    average_score = sum(rounds_played)/len(rounds_played)
 
-# if rounds_played > 0:
-#     rounds_won = rounds_played - rounds_tied - rounds_lost
-#     percent_won = rounds_won / rounds_played * 100
-#     percent_lost = rounds_lost / rounds_played * 100
-#     percent_tied = 100 - percent_won - percent_lost
+    # Display the game history on request
+    see_history = string_checker("Do you want to see your game history? ")
+    print()
+    if see_history == "yes":
+        print("\n 📈📊 Game Statistics 📊📉")
+        print(f"Correct: {rounds_won} | Incorrect: {rounds_lost} | Average:{average_score:.2f} ")
+        print()
+
+        for item in game_history:
+            print(item)
+
+        print ()
+        print("Thank you for playing")
+
+    else:
+        print("xxx! Uh oh - you chickened out !xxx")
