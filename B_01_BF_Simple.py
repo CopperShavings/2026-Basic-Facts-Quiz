@@ -135,7 +135,7 @@ correct = 0
 feedbackgood_list = ["Correct - Good job!", "Correct - Nice work!", "Correct - Cool!", "Correct - Great answer!", "Correct! - Awesomeness!", "Correct! - Wow!"]
 feedbackbad_list = ["Incorrect - You'll get em next time!", "Incorrect - Uh oh!", "Incorrect - Nice try", "Incorrect - There's always next time!"]
 
-game_history = [ ]
+history = [ ]
 score = 0
 exit_code = 'xxx'
 
@@ -225,14 +225,18 @@ while rounds_played < num_rounds:
     print("Spoiler Alert: ", answer)
     user_guess = int_check2(f"{x} {symbol} {y} = ")
 
+
     if user_guess == answer:
         print (feedback_good)
         correct += 1
         continue
 
     if user_guess == exit_code:
-        print("Ruh Roh...you chickened out")
-        break
+        see_stats = string_checker("You selected the exit code. Would you like to see your stats?")
+        if see_stats == "yes":
+
+        else:
+            break
 
     else:
         print (feedback_bad)
@@ -240,29 +244,41 @@ while rounds_played < num_rounds:
         continue
 
 
-
 # #calc stats
-if exit_code or rounds_played > 0:
+    if exit_code or rounds_played > 0:
 
-    rounds_won = rounds_played - incorrect
-    rounds_lost = rounds_played - correct
-    percent_won = rounds_won / rounds_played * 100
-    percent_lost = rounds_lost / rounds_played * 100
-    average_score = sum(rounds_played)/len(rounds_played)
+        questions_correct = rounds_played - incorrect
+        questions_incorrect = rounds_played - correct
+        percent_correct = questions_correct / rounds_played * 100
+        percent_wrong = questions_incorrect / rounds_played * 100
+        average_score = sum(rounds_played)/len(rounds_played)
 
-    # Display the game history on request
-    see_history = string_checker("Do you want to see your game history? ")
-    print()
-    if see_history == "yes":
-        print("\n 📈📊 Game Statistics 📊📉")
-        print(f"Correct: {rounds_won} | Incorrect: {rounds_lost} | Average:{average_score:.2f} ")
+
+
+
+        final_results = ("\n 📈📊 Statistics 📊📉"
+                         f"Number of questions answered: {rounds_played}"
+                         f"Correct: {questions_correct} || Incorrect: {questions_incorrect}"
+                         f"Overall, you got {percent_correct}% correct | {percent_wrong}% incorrect | {average_score}")
+
+        history.append(final_results)
+
+
+
+
+
+
+        # Display the game history on request
+        see_history = string_checker("Do you want to see your stats? ")
         print()
-
-        for item in game_history:
-            print(item)
+        if see_history == "yes":
+            for item in history:
+                print(item)
 
         print ()
         print("Thank you for playing")
 
     else:
         print("xxx! Uh oh - you chickened out !xxx")
+
+
