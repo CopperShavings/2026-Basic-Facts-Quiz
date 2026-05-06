@@ -122,7 +122,7 @@ def int_check2(question):
 
 # Main routine starts
 
-# Initialise game variables
+# game variables
 mode = "regular"
 rounds_played = 0
 num_rounds = 0
@@ -132,6 +132,7 @@ symbols_list = ['x', '+', '-', '/']
 incorrect = 0
 correct = 0
 
+# random feedback generator based on answer
 feedbackgood_list = ["Correct - Good job!", "Correct - Nice work!", "Correct - Cool!", "Correct - Great answer!", "Correct! - Awesomeness!", "Correct! - Wow!"]
 feedbackbad_list = ["Incorrect - You'll get em next time!", "Incorrect - Uh oh!", "Incorrect - Nice try", "Incorrect - There's always next time!"]
 
@@ -181,7 +182,7 @@ else:
 
 while rounds_played < num_rounds:
 
-    # Rounds headings (based on mode)
+    # Rounds headings (based on mode selected)
     if mode == "infinite":
         rounds_heading = f"\n♾️️♾️ Question {rounds_played + 1} (Infinite Mode) ♾️♾️"
     else:
@@ -216,14 +217,14 @@ while rounds_played < num_rounds:
     elif symbol == 'x':
         answer = x * y
     elif symbol == '/':
-        x = x * y  # makes it divisible
+        x = x * y
         answer = x // y
 
     if num1 < num2 and symbol == '-':
             x, y = y, x
 
     print("Spoiler Alert: ", answer)
-    user_guess: str = int_check2(f"{x} {symbol} {y} = ")
+    user_guess = int_check2(f"{x} {symbol} {y} = ")
 
     if user_guess == answer:
         print (feedback_good)
@@ -238,16 +239,18 @@ while rounds_played < num_rounds:
             questions_incorrect = rounds_played - correct
             percent_correct = questions_correct / rounds_played * 100
             percent_wrong = questions_incorrect / rounds_played * 100
-            average_score = sum(rounds_played) / len(rounds_played)
+            average_score = (correct / rounds_played * 100)
 
-            final_results = ("\n 📈📊 Statistics 📊📉"
-                         f"Number of questions answered: {rounds_played}"
-                         f"Correct: {questions_correct} || Incorrect: {questions_incorrect}"
+            final_results = ("\n 📈📊 Statistics 📊📉 "
+                         f"Number of questions answered: {rounds_played} "
+                         f"Correct: {questions_correct} || Incorrect: {questions_incorrect} "
                          f"Overall, you got {percent_correct}% correct || {percent_wrong}% incorrect "
                          f"{average_score}% is your average score.")
 
-            history.append(final_results)
+            print(final_results)
+            print()
             print("End.")
+            break
 
         else:
             break
@@ -260,7 +263,7 @@ while rounds_played < num_rounds:
 
 
 
-
+# generating round statistics
 if rounds_played > 0 or user_guess == exit_code:
     see_stats = string_checker("You selected the exit code. Would you like to see your stats?")
     if see_stats == "yes":
@@ -269,14 +272,16 @@ if rounds_played > 0 or user_guess == exit_code:
         questions_incorrect = rounds_played - correct
         percent_correct = questions_correct / rounds_played * 100
         percent_wrong = questions_incorrect / rounds_played * 100
-        average_score = sum(rounds_played) / len(rounds_played)
+        average_score = (correct / rounds_played * 100)
 
 
         final_results: str = ("\n 📈📊 Statistics 📊📉"
                          f"Number of questions answered: {rounds_played}"
                          f"Correct: {questions_correct} || Incorrect: {questions_incorrect}"
                          f"Overall, you got {percent_correct}% correct || {percent_wrong}% incorrect "
-                         f"{average_score}% is your average score.")
+                         f"{average_score}% is your average.")
+
+        print(final_results)
         print()
         print("End.")
 
