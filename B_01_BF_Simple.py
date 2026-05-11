@@ -241,11 +241,11 @@ while rounds_played < num_rounds:
             percent_wrong = questions_incorrect / rounds_played * 100
             average_score = (correct / rounds_played * 100)
 
-            final_results = ("\n 📈📊 Statistics 📊📉 "
-                         f"Number of questions answered: {rounds_played} "
-                         f"Correct: {questions_correct} || Incorrect: {questions_incorrect} "
-                         f"Overall, you got {percent_correct}% correct || {percent_wrong}% incorrect "
-                         f"{average_score}% is your average score.")
+            final_results: str = ("\n 📈📊 Statistics 📊📉 "
+                                  f"Number of questions answered: {rounds_played} /// "
+                                  f"Correct: {questions_correct} | Incorrect: {questions_incorrect} /// "
+                                  f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect "
+                                  f"| {average_score}% is your average.")
 
             print(final_results)
             print()
@@ -270,18 +270,16 @@ if rounds_played > 0 or user_guess == exit_code:
 
         questions_correct = rounds_played - incorrect
         questions_incorrect = rounds_played - correct
-        percent_correct = questions_correct / rounds_played * 100
-        percent_wrong = questions_incorrect / rounds_played * 100
-        average_score = (correct / rounds_played * 100)
+        percent_correct = questions_correct // rounds_played * 100
+        percent_wrong = questions_incorrect // rounds_played * 100
+        average_score = (correct // rounds_played * 100)
 
-
-        final_results: str = ("\n 📈📊 Statistics 📊📉"
-                         f"Number of questions answered: {rounds_played}"
-                         f"Correct: {questions_correct} || Incorrect: {questions_incorrect}"
-                         f"Overall, you got {percent_correct}% correct || {percent_wrong}% incorrect "
-                         f"{average_score}% is your average.")
+        final_results: str = ("\n 📈📊 Statistics 📊📉 "
+                              f"Number of questions answered: {rounds_played} /// "
+                              f"Correct: {questions_correct} | Incorrect: {questions_incorrect} /// "
+                              f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect "
+                              f"| {average_score}% is your average.")
 
         print(final_results)
         print()
         print("End.")
-
