@@ -1,4 +1,5 @@
 import random
+import math
 import operator
 import string
 from random import randint
@@ -44,7 +45,7 @@ def instructions():
 parameters (1, 12) or pick your own!
 
 If you decide to choose your own, the numbers you pick must be
-between 1 and 100.
+between 1 and 100, and num1 must be less than num2
 --------
 
 📄 - You need to try get as many answers correct as possible!
@@ -54,7 +55,8 @@ You'll be answering addition, subtraction, multiplication, and
 division questions
 --------
 
-📄 - Select <xxx> to end the game.
+📄 - Select <xxx> to end the game. You'll have the option to see your
+statistics if you answer all the questions or quit early.
 
 Good luck!
 
@@ -65,6 +67,7 @@ def int_check(question):
     error = "Please enter an integer between 1 and 100."
     high = 100
     low = 1
+
 
     while True:
         to_check = input(question)
@@ -91,7 +94,7 @@ def int_check(question):
             print(error)
 
 def int_check2(question):
-    error = "Please enter an integer between 1 and 100."
+    error = "error."
     high = 10000
     low = -11111
 
@@ -178,6 +181,7 @@ else:
     num1 = int_check(question="Num 1?: ")
     num2 = int_check(question="Num 2?: ")
 
+
 # Game loop starts here
 
 while rounds_played < num_rounds:
@@ -220,10 +224,9 @@ while rounds_played < num_rounds:
         x = x * y
         answer = x // y
 
-    if num1 < num2 and symbol == '-':
-            x, y = y, x
 
-    print("Spoiler Alert: ", answer)
+    # spoilers for test
+    #print("Spoiler Alert: ", answer)
     user_guess = int_check2(f"{x} {symbol} {y} = ")
 
     if user_guess == answer:
@@ -232,54 +235,34 @@ while rounds_played < num_rounds:
         continue
 
     elif user_guess == exit_code:
-        see_stats = string_checker("You selected the exit code. Would you like to see your stats?")
-        if see_stats == "yes":
-
-            questions_correct = rounds_played - incorrect
-            questions_incorrect = rounds_played - correct
-            percent_correct = questions_correct / rounds_played * 100
-            percent_wrong = questions_incorrect / rounds_played * 100
-            average_score = (correct / rounds_played * 100)
-
-            final_results: str = ("\n 📈📊 Statistics 📊📉 "
-                                  f"Number of questions answered: {rounds_played} /// "
-                                  f"Correct: {questions_correct} | Incorrect: {questions_incorrect} /// "
-                                  f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect "
-                                  f"| {average_score}% is your average.")
-
-            print(final_results)
-            print()
-            print("End.")
-            break
-
-        else:
-            break
-
+        print ("You've selected the exit code.")
+        break
 
     else:
         print (feedback_bad)
+        print("The correct answer is", answer)
         incorrect += 1
         continue
 
-
-
+# remember to round the percentages to 2 dp.
 # generating round statistics
-if rounds_played > 0 or user_guess == exit_code:
-    see_stats = string_checker("You selected the exit code. Would you like to see your stats?")
+if rounds_played > 0:
+    see_stats = string_checker("Would you like to see your stats?")
     if see_stats == "yes":
 
         questions_correct = rounds_played - incorrect
         questions_incorrect = rounds_played - correct
-        percent_correct = questions_correct // rounds_played * 100
-        percent_wrong = questions_incorrect // rounds_played * 100
-        average_score = (correct // rounds_played * 100)
+        percent_correct = questions_correct / rounds_played * 100
+        percent_wrong = questions_incorrect / rounds_played * 100
+        average_score = (correct / rounds_played * 100)
 
-        final_results: str = ("\n 📈📊 Statistics 📊📉 "
-                              f"Number of questions answered: {rounds_played} /// "
-                              f"Correct: {questions_correct} | Incorrect: {questions_incorrect} /// "
-                              f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect "
+        final_results: str = ("\n 📈--- Statistics ---📉 "
+                              f"Number of questions answered: {rounds_played} 📊 "
+                              f"Correct: {questions_correct} | Incorrect: {questions_incorrect} 📊 "
+                              f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect 📊 "
                               f"| {average_score}% is your average.")
 
         print(final_results)
         print()
-        print("End.")
+        print()
+        print("Thank you for playing")
