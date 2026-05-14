@@ -7,6 +7,7 @@ from random import randint
 
 # string checker (y/n)
 def string_checker(question, valid_ans=("yes", "no")):
+    """Ensures user response to a question is 'yes' or 'no'"""
 
     error = f"Please enter a valid option from the following list: {valid_ans}"
 
@@ -64,10 +65,10 @@ Good luck!
 
 # int check
 def int_check(question):
+    """Intchecker for set up questions eg. parameters"""
     error = "Please enter an integer between 1 and 100."
     high = 100
     low = 1
-
 
     while True:
         to_check = input(question)
@@ -76,7 +77,7 @@ def int_check(question):
         if to_check == "":
             return "infinite"
 
-        # check for inf mode / exit code
+        # check for exit
         if to_check == exit_code:
             return exit_code
 
@@ -89,12 +90,15 @@ def int_check(question):
             else:
                 return response
 
-
         except ValueError:
             print(error)
 
+
 def int_check2(question):
-    error = "error."
+    """Intchecker for questions when quiz begins"""
+
+    # answer cannot be more than 10000 or less than -11111
+    error = "This answer is too high / low."
     high = 10000
     low = -11111
 
@@ -108,6 +112,7 @@ def int_check2(question):
         # check for inf mode / exit code
         if to_check == exit_code:
             return exit_code
+
 
         try:
             response = int(to_check)
@@ -182,7 +187,7 @@ else:
     num2 = int_check(question="Num 2?: ")
 
 
-# Game loop starts here
+# Quiz loop starts here
 
 while rounds_played < num_rounds:
 
@@ -208,12 +213,14 @@ while rounds_played < num_rounds:
 
 
 # create the question for the user...
+    # selects random symbol from symbols list for equation
     symbol = random.choice(symbols_list)
     feedback_bad = random.choice(feedbackbad_list)
     feedback_good = random.choice(feedbackgood_list)
     x = random.randint(num1, num2)
     y = random.randint(num1, num2)
 
+# generates answer for question depending on randomised symbol.
     if symbol == '+':
         answer = x + y
     elif symbol == '-':
@@ -222,6 +229,7 @@ while rounds_played < num_rounds:
         answer = x * y
     elif symbol == '/':
         x = x * y
+        # Makes sure the answer is rounded to 1 dp
         answer = x // y
 
 
@@ -252,15 +260,16 @@ if rounds_played > 0:
 
         questions_correct = rounds_played - incorrect
         questions_incorrect = rounds_played - correct
-        percent_correct = questions_correct / rounds_played * 100
-        percent_wrong = questions_incorrect / rounds_played * 100
-        average_score = (correct / rounds_played * 100)
+        percent_correct = round(questions_correct / rounds_played * 100)
+        percent_wrong = round(questions_incorrect / rounds_played * 100)
+        average_score = round(correct / rounds_played * 100)
 
         final_results: str = ("\n 📈--- Statistics ---📉 "
-                              f"Number of questions answered: {rounds_played} 📊 "
-                              f"Correct: {questions_correct} | Incorrect: {questions_incorrect} 📊 "
-                              f"Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect 📊 "
-                              f"| {average_score}% is your average.")
+                              f"\n "
+                              f"\n  Number of questions answered: {rounds_played} "
+                              f"\n  Correct: {questions_correct} | Incorrect: {questions_incorrect} "
+                              f"\n  Overall, you got {percent_correct}% correct and {percent_wrong}% incorrect "
+                              f"\n  Your average score is {average_score}%.")
 
         print(final_results)
         print()
